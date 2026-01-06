@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureTechBank - Online Banking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Challenge Start Popup -->
+    <div id="challengePopup" class="popup-overlay">
+        <div class="popup-content">
+            <h2>🎯 Hackathon Challenge</h2>
+            <div class="popup-text">
+                <p><strong>Willkommen bei der SecureTechBank Hackathon Challenge!</strong></p>
+                <p>Hacke dich zum Ziel. Je länger du brauchst, desto weniger Punkte gibt es.</p>
+                <p><strong>⚠️ WICHTIG:</strong> Lies dir NICHT die README.md Datei durch - das wäre Cheating!</p>
+                <p><strong>Dein Ziel:</strong> Transferiere 1.000.000€ auf deinen Account.</p>
+                <p>Du erhältst nur einmal Punkte, wenn du das Ziel erreicht hast.</p>
+                <p class="popup-footer">Schließe dieses Fenster um zu beginnen.</p>
+            </div>
+            <button id="closePopupBtn" class="popup-btn" disabled>Challenge Starten</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🔒</div>
+                <h1>Secure<span>Tech</span>Bank</h1>
+            </div>
+            <nav>
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Login/Register Section -->
+        <section id="authSection" class="auth-section">
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Login</button>
+                    <button class="auth-tab" data-tab="register">Registrieren</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginForm" class="auth-form active">
+                    <h2>Willkommen zurück</h2>
+                    <div class="form-group">
+                        <label for="loginEmail">E-Mail</label>
+                        <input type="email" id="loginEmail" placeholder="ihre@email.de" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Passwort</label>
+                        <input type="password" id="loginPassword" placeholder="Passwort" required>
+                    </div>
+                    <button id="loginBtn" class="primary-btn">Anmelden</button>
+                    <p class="auth-message" id="loginMessage"></p>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerForm" class="auth-form">
+                    <h2>Neues Konto erstellen</h2>
+                    <div class="form-group">
+                        <label for="registerName">Name</label>
+                        <input type="text" id="registerName" placeholder="Ihr Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">E-Mail</label>
+                        <input type="email" id="registerEmail" placeholder="ihre@email.de" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Passwort</label>
+                        <input type="password" id="registerPassword" placeholder="Passwort (min. 6 Zeichen)" required>
+                    </div>
+                    <button id="registerBtn" class="primary-btn">Registrieren</button>
+                    <p class="auth-message" id="registerMessage"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard (Hidden initially) -->
+        <section id="dashboardSection" class="dashboard-section" style="display: none;">
+            <!-- Paywall Overlay -->
+            <div id="paywall" class="paywall-overlay">
+                <div class="paywall-content">
+                    <h2>🔒 Premium Feature</h2>
+                    <p>Um auf Ihr Dashboard zuzugreifen, benötigen Sie ein Premium-Abonnement.</p>
+                    <div class="paywall-price">
+                        <span class="price">29,99€</span>
+                        <span class="period">/Monat</span>
+                    </div>
+                    <button class="premium-btn" onclick="alert('Zahlung fehlgeschlagen. Bitte versuchen Sie es später erneut.')">Jetzt upgraden</button>
+                    <p class="paywall-note">Oder kontaktieren Sie unseren Support</p>
+                </div>
+            </div>
+
+            <!-- Dashboard Navigation -->
+            <div class="dashboard-nav">
+                <button class="nav-item active" data-section="overview">
+                    <span class="nav-icon">🏠</span>
+                    <span>Übersicht</span>
+                </button>
+                <button class="nav-item" data-section="news">
+                    <span class="nav-icon">📰</span>
+                    <span>Nachrichten</span>
+                </button>
+                <button class="nav-item" data-section="transactions">
+                    <span class="nav-icon">💸</span>
+                    <span>Transaktionen</span>
+                </button>
+                <button class="nav-item" data-section="personalData">
+                    <span class="nav-icon">👤</span>
+                    <span>Persönliche Daten</span>
+                </button>
+                <button class="nav-item" data-section="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Einstellungen</span>
+                </button>
+                <button id="logoutBtn" class="nav-item logout">
+                    <span class="nav-icon">🚪</span>
+                    <span>Abmelden</span>
+                </button>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Overview Section -->
+                <div id="overviewSection" class="content-section active">
+                    <h1>Willkommen, <span id="userName">User</span>!</h1>
+                    
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <h3>📊 Marktübersicht</h3>
+                            <p>DAX: 17.234,56 (+0,45%)</p>
+                            <p>EUR/USD: 1,0823 (-0,12%)</p>
+                            <p>Gold: 2.045,32 USD (+0,78%)</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>📅 Termine</h3>
+                            <p>Keine anstehenden Termine</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>📧 Nachrichten</h3>
+                            <p>3 neue Mitteilungen</p>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-card">
+                            <span class="action-icon">💳</span>
+                            <span class="action-text">Neue Überweisung</span>
+                        </button>
+                        <button class="action-card">
+                            <span class="action-icon">📱</span>
+                            <span class="action-text">Karten verwalten</span>
+                        </button>
+                        <button class="action-card">
+                            <span class="action-icon">📄</span>
+                            <span class="action-text">Kontoauszüge</span>
+                        </button>
+                        <button class="action-card">
+                            <span class="action-icon">💰</span>
+                            <span class="action-text">Sparpläne</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- News Section -->
+                <div id="newsSection" class="content-section">
+                    <h1>📰 Aktuelle Nachrichten</h1>
+                    
+                    <div class="news-grid">
+                        <article class="news-card">
+                            <h3>Zinssätze bleiben stabil</h3>
+                            <p class="news-date">06.01.2026 - 09:30 Uhr</p>
+                            <p>Die Europäische Zentralbank hat entschieden, die Leitzinsen bei 4,5% zu belassen. Experten erwarten keine Änderungen in den kommenden Monaten...</p>
+                        </article>
+
+                        <article class="news-card">
+                            <h3>Neue Investmentmöglichkeiten</h3>
+                            <p class="news-date">05.01.2026 - 14:15 Uhr</p>
+                            <p>SecureTechBank erweitert ihr Produktportfolio um nachhaltige ETFs. Kunden können nun in über 50 verschiedene grüne Fonds investieren...</p>
+                        </article>
+
+                        <article class="news-card blurred-text">
+                            <h3>🔐 Sicherheit im digitalen Zeitalter</h3>
+                            <p class="news-date">04.01.2026 - 11:00 Uhr</p>
+                            <p>In der heutigen digitalen Welt ist Verschlüsselung wichtiger denn je. Es gibt verschiedene Methoden, um Daten zu schützen:</p>
+                            <ul class="encryption-list">
+                                <li><strong>AES (Advanced Encryption Standard)</strong> - Symmetrische Verschlüsselung, weit verbreitet
+                                    <a href="https://www.youtube.com/watch?v=O4xNJsjtN6E" target="_blank" class="yt-link">📺 Tutorial</a>
+                                </li>
+                                <li><strong>RSA</strong> - Asymmetrische Verschlüsselung für sichere Kommunikation
+                                    <a href="https://www.youtube.com/watch?v=wXB-V_Keiu8" target="_blank" class="yt-link">📺 Tutorial</a>
+                                </li>
+                                <li><strong>Blowfish</strong> - Schnelle Block-Verschlüsselung
+                                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="yt-link">📺 Tutorial</a>
+                                </li>
+                                <li><strong>Triple DES</strong> - Dreifache Verschlüsselung für erhöhte Sicherheit
+                                    <a href="https://www.youtube.com/watch?v=invalid123" target="_blank" class="yt-link">📺 Tutorial</a>
+                                </li>
+                                <li><strong>SHA-256</strong> - Kryptographische Hash-Funktion für Datenintegrität
+                                    <a href="https://www.youtube.com/watch?v=b4b8ktEV4Bg&vault=a7f3c9e2b1d5f8a4c6e9b2d1f5a8c3e7" target="_blank" class="yt-link">📺 Tutorial</a>
+                                </li>
+                                <li><strong>Twofish</strong> - Nachfolger von Blowfish mit verbesserter Sicherheit
+                                    <a href="https://www.youtube.com/watch?v=invalid456" target="_blank" class="yt-link">📺 Tutorial</a>
+                                </li>
+                            </ul>
+                            <p>Unsere Bank verwendet ausschließlich SHA-256 für kritische Sicherheitsprozesse. Mehr Informationen finden Sie in unseren Sicherheitsrichtlinien.</p>
+                        </article>
+
+                        <article class="news-card">
+                            <h3>Kundenservice erweitert</h3>
+                            <p class="news-date">03.01.2026 - 16:45 Uhr</p>
+                            <p>Ab sofort erreichen Sie unseren Kundenservice auch samstags von 9:00 bis 16:00 Uhr. Nutzen Sie auch unseren neuen Live-Chat für schnelle Hilfe...</p>
+                        </article>
+
+                        <article class="news-card">
+                            <h3>Mobile Banking Update</h3>
+                            <p class="news-date">02.01.2026 - 10:20 Uhr</p>
+                            <p>Die neue Version unserer Banking-App ist verfügbar! Mit verbesserter Benutzeroberfläche und neuen Funktionen wie Fingerabdruck-Login...</p>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- Transactions Section -->
+                <div id="transactionsSection" class="content-section">
+                    <h1>💸 Transaktionen</h1>
+                    <div class="transfer-form">
+                        <h2>Neue Überweisung</h2>
+                        <div class="form-group">
+                            <label for="transferTo">Empfänger</label>
+                            <input type="text" id="transferTo" placeholder="Name des Empfängers">
+                        </div>
+                        <div class="form-group">
+                            <label for="transferAmount">Betrag (€)</label>
+                            <input type="number" id="transferAmount" placeholder="0.00" min="0" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="transferNote">Verwendungszweck</label>
+                            <input type="text" id="transferNote" placeholder="Optional">
+                        </div>
+                        <button id="transferBtn" class="primary-btn">Überweisung ausführen</button>
+                        <p class="transfer-message" id="transferMessage"></p>
+                    </div>
+
+                    <div class="transaction-history">
+                        <h2>Letzte Transaktionen</h2>
+                        <div class="transaction-item">
+                            <div>
+                                <p class="transaction-name">Gehalt</p>
+                                <p class="transaction-date">01.01.2026</p>
+                            </div>
+                            <p class="transaction-amount positive">+2.500,00€</p>
+                        </div>
+                        <div class="transaction-item">
+                            <div>
+                                <p class="transaction-name">Miete</p>
+                                <p class="transaction-date">01.01.2026</p>
+                            </div>
+                            <p class="transaction-amount negative">-850,00€</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Data Section -->
+                <div id="personalDataSection" class="content-section">
+                    <h1>👤 Persönliche Daten</h1>
+                    
+                    <div id="personalDataLock" class="data-lock">
+                        <div class="lock-icon">🔒</div>
+                        <h2>Geschützter Bereich</h2>
+                        <p>Bitte geben Sie Ihr Passwort ein, um auf Ihre persönlichen Daten zuzugreifen.</p>
+                        <div class="form-group">
+                            <input type="password" id="personalDataPassword" placeholder="Passwort eingeben">
+                        </div>
+                        <button id="unlockPersonalDataBtn" class="primary-btn">Entsperren</button>
+                        <p class="auth-message" id="personalDataMessage"></p>
+                    </div>
+
+                    <div id="personalDataContent" class="personal-data-content" style="display: none;">
+                        <div class="data-card">
+                            <h3>Persönliche Informationen</h3>
+                            <p><strong>Name:</strong> <span id="dataName">-</span></p>
+                            <p><strong>E-Mail:</strong> <span id="dataEmail">-</span></p>
+                            <p><strong>Kunden-ID:</strong> <span id="dataUserId">-</span></p>
+                        </div>
+
+                        <div class="data-card balance-card">
+                            <h3>Kontostand</h3>
+                            <p class="balance-amount">€<span id="dataBalance">100.00</span></p>
+                            <p class="balance-label">Verfügbares Guthaben</p>
+                        </div>
+
+                        <div class="data-card">
+                            <h3>🏆 Hackathon Fortschritt</h3>
+                            <p><strong>HackCoins:</strong> <span id="dataHackCoins">0</span></p>
+                            <p><strong>Abgeschlossene Challenges:</strong> <span id="dataChallengesCompleted">0</span>/10</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settingsSection" class="content-section">
+                    <h1>⚙️ Einstellungen</h1>
+                    <div class="settings-card">
+                        <h3>Konto-Einstellungen</h3>
+                        <button class="secondary-btn">Passwort ändern</button>
+                        <button class="secondary-btn">E-Mail ändern</button>
+                        <button class="secondary-btn">Zwei-Faktor-Authentifizierung</button>
+                    </div>
+                    <div class="settings-card">
+                        <h3>Benachrichtigungen</h3>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> E-Mail Benachrichtigungen
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox"> SMS Benachrichtigungen
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2025 SecureTechBank - Ihre Sicherheit ist unsere Priorität</p>
+            <div class="security-badge">
+                <span>🔒</span>
+                <span>256-bit SSL Verschlüsselung</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
