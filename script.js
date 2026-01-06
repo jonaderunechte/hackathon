@@ -1,12 +1,12 @@
 // Firebase Configuration
 // REPLACE WITH YOUR FIREBASE CONFIG
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAb9BVZYzfOC8NB9ZLDb22X5_7__Pa9Npc",
+  authDomain: "hackathon-d891d.firebaseapp.com",
+  projectId: "hackathon-d891d",
+  storageBucket: "hackathon-d891d.firebasestorage.app",
+  messagingSenderId: "909860734892",
+  appId: "1:909860734892:web:377851664b8deef4f45c09"
 };
 
 // Initialize Firebase
